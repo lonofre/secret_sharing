@@ -30,19 +30,11 @@ def test_get_points(K, t, n):
     terms = get_terms(K, t)
     points = get_points(n, terms)
     correct = []
-    check = 0
     for point in points:
         x = point[0]
         if point[1] == polynomial_value(terms, x):
             correct.append(1)
-        else:
-            correct.append(0)
-    for c in correct:
-        if c == 1:
-            check = 1
-        else:
-            check = 0
-    assert check == 1 and len(correct) == n
+    assert len(correct) == n
     
 
     
