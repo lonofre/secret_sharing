@@ -29,7 +29,7 @@ def encrypt(pswd, n, t, data):
     cipher = AES.new(bytes_key, AES.MODE_EAX)
     ciphertext, tag = cipher.encrypt_and_digest(data)
 
-    return  ciphertext, tag, cipher.nonce, points
+    return ciphertext, tag, cipher.nonce, points
 
 def get_terms(K, t):
     '''
