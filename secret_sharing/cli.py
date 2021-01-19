@@ -1,4 +1,4 @@
-from encryption import encrypt
+from .encryption import encrypt
 from getpass import getpass
 import re
 import click
@@ -14,21 +14,13 @@ def sharing():
 @click.argument('filename', type=click.File('rb'))
 
 def encrypt_file(total_points, min_points, filename):
-    '''
-     
-    Encrypts a file. Saves it's encryption and a file with 
+    '''Encrypts a file. Saves it's encryption and a file with 
     n = total_points points.
-
-    Parameters
-    ----------
-    total_points
-                Number of points will be evaluated.
+    TOTAL_POINTS is the number of points will be evaluated.
     
-    min_points
-              Degree of the polynomial.
+    MIN_POINTS is the degree of the polynomial.
     
-    filename
-            File to encrypt.
+    FILENAME is File to encrypt.
     
     '''
     
@@ -37,11 +29,11 @@ def encrypt_file(total_points, min_points, filename):
     ciphertext, tag, nonce, points = encrypt(pswd, int(total_points),
                                              int(min_points), data)
     
-    f_name = re.sub(r'\.sss$', '', filename.name).split(sep =".")
+    f_name = re.sub(r'\.sss$', '', filename.name)
     
-    file_out = open(f_name[0]+".ss", "wb")
+    file_out = open(f_name+".ss", "wb")
     [ file_out.write(x) for x in (nonce, tag, ciphertext) ]
     file_out.close()
 
-    with open(f_name[0]+".csv", "w") as csv_file:
+    with open(f_name+".csv", "w") as csv_file:
         csv_file.write('\n'.join('%s, %s' % point for point in points))

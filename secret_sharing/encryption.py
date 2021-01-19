@@ -13,7 +13,6 @@ def encrypt(pswd, n, t, data):
          the file encripted.
     
     * File with n pairs (x, P(x)). 
-
     Parameters 
     ----------
     * pswd, String, password typed by the user.
