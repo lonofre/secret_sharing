@@ -1,4 +1,4 @@
-from encryption import encrypt
+from .encryption import encrypt
 from getpass import getpass
 import re
 import click
@@ -14,21 +14,14 @@ def sharing():
 @click.argument('filename', type=click.File('rb'))
 
 def encrypt_file(total_points, min_points, filename):
-    '''
-     
-    Encrypts a file. Saves it's encryption and a file with 
+    '''Encrypts a file. Saves it's encryption and a file with 
     n = total_points points.
 
-    Parameters
-    ----------
-    total_points
-                Number of points will be evaluated.
+    TOTAL_POINTS is the number of points will be evaluated.
     
-    min_points
-              Degree of the polynomial.
+    MIN_POINTS is the degree of the polynomial.
     
-    filename
-            File to encrypt.
+    FILENAME is File to encrypt.
     
     '''
     

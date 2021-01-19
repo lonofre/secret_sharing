@@ -1,3 +1,3 @@
-from cli import sharing 
+from .cli import sharing 
 
 sharing()
