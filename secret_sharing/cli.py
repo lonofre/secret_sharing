@@ -1,23 +1,14 @@
+from .encryption import encrypt
+from .decryption import decrypt
+from getpass import getpass
+import re
 import click
 import csv
-import re
-from .decryption import decrypt
 
 @click.group()
 def sharing():
     pass
 
-@sharing.command(name='c')
-@click.argument('points_output', nargs=1)
-@click.argument('total_points', nargs=1)
-@click.argument('min_points', nargs=1)
-@click.argument('filename', type=click.File('rb'))
-def encrypt_file(points_output, total_points, min_points, filename):
-    ''' Encrypt a file '''
-
-    text = file.read()
-    if text:
-        print(text)    
 
 @sharing.command(name='d')
 @click.argument('filename', type=click.File('rb'))
@@ -48,3 +39,36 @@ def decrypt_file(filename, points_file):
     else:
         click.echo(f'Error: Invalid file extension, it needs to end with .ss')
 
+
+@sharing.command(name='c')
+@click.argument('total_points', nargs=1)
+@click.argument('min_points', nargs=1)
+@click.argument('filename', type=click.File('rb'))
+def encrypt_file(total_points, min_points, filename):
+    '''
+    Encrypts a file. Saves it's encryption and a file with 
+    n = total_points points.
+    
+    Parameters
+    -----------
+    TOTAL_POINTS is the number of points will be evaluated.
+    
+    MIN_POINTS is the degree of the polynomial.
+    
+    FILENAME is File to encrypt.
+    
+    '''
+    
+    data  = filename.read()
+    pswd = getpass()
+    ciphertext, tag, nonce, points = encrypt(pswd, int(total_points),
+                                             int(min_points), data)
+    
+    f_name = re.sub(r'\.ss$', '', filename.name)
+    
+    file_out = open(f_name+".ss", "wb")
+    [ file_out.write(x) for x in (nonce, tag, ciphertext) ]
+    file_out.close()
+    
+    with open(f_name+".csv", "w") as csv_file:
+        csv_file.write('\n'.join('%s, %s' % point for point in points))
