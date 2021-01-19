@@ -1,22 +1,35 @@
 from random import randint
-    
-def encrypt(s_filename, n, t, s_clearfile, pswd):
+from Cryptodome.Cipher import AES
+from Cryptodome.Hash import SHA256
+
+def encrypt(pswd, n, t, data):
     ''' 
-    -----Function under construction -----
-    Returns: 
-    * Encrypted file using AES.
+    
+    Returns
+    --------
+    bytes
+         the file encripted
     
     * File with n pairs (x, P(x)). 
-    Params: 
-    * s_filename, String. Name of the file where the n point will be stored.
+
+    Parameters 
+    ----------
+    * pswd, String, password typed by the user.
     * n, Integer. n > 2. Total evaluations requiered.
-    * t, integer. 1 < t <= n. Determines the polynomial degree. Number of terms.     
-    * s_clearfile, String. Name of the file with the decrypted message.
+    * t, integer. 1 < t <= n. Determines the polynomial degree(Number of terms).
+    * data, String. Data to encrypt.
     
-    * pswd, String. Password typed by the user.
     '''
-    terms = []
-    
+    key = SHA256.new()
+    key.update(pswd.encode('utf8'))
+    bytes_key = key.digest()
+    int_key = bytes_to_int(bytes_key)
+    terms = get_terms(int_key, t)
+    points = get_points(n, terms)
+    cipher = AES.new(bytes_key, AES.MODE_EAX)
+    ciphertext, tag = cipher.encrypt_and_digest(data)
+
+    return  ciphertext, tag, cipher.nonce, points
 
 def get_terms(K, t):
     '''
@@ -31,7 +44,7 @@ def get_terms(K, t):
     '''
     terms = [K]
     for i in range(t-1):
-        terms.append(randint(100, K))
+        terms.append(randint(100000000000000000000000000000000000000000000000000000000000000000000000000000,1000000000000000000000000000000000000000000000000000000000000000000000000000000))
     return terms
     
 def polynomial_value(terms, x):
@@ -54,19 +67,38 @@ def polynomial_value(terms, x):
 
 def get_points(n, terms):
     '''
-    Returns a list with n points (x,y), 
-           where x is an Integer generated randomly and
+    Returns 
+    -------
+    * List with n points (x,y), 
+           where x is in [1, n] and
                  y is the evaluation of the polynomial represented on terms
-                 on x.
-    Params:
-     
+                 on i.
+    Parameters
+    ----------
     * n, Integer. Length of the points list.
     
     * terms. Integer List. Representation of the t-1 polynomial degree.
     '''
     points = []
     for i in range(n):
-        x = randint(10, n+10)
-        y = polynomial_value(terms, x)
-        points.append((x, y))
+        y = polynomial_value(terms, i+1)
+        points.append((i+1, y))
     return points
+
+def bytes_to_int(bytes):
+    '''
+    Converts bytes to int
+    
+    Returns
+    -------
+    Integer
+           An integer representation of the received bytes.
+    
+    Parameters
+    ----------
+    bytes
+    '''
+    result = 0
+    for byte in bytes:
+        result = result * 256 + int(byte)
+    return result
