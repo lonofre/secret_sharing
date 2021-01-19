@@ -4,15 +4,15 @@ class Lagrange:
         self.prime = prime
 
     def interpolation(self, evaluation, points):
-        '''Given a set of points, finds a polynomial that
+        '''Given a list of points, finds a polynomial that
         passes through all those points and evaluates x
 
         Parameters
         ----------
         evaluation: int
             The x-coordinate that will be evaluated
-        points:
-            A set of points to build the polynomial
+        points: list
+            A list of points to build the polynomial
 
         Returns
         -------
@@ -34,7 +34,7 @@ class Lagrange:
         ----------
         evaluation: int
             The x-coordinate to evaluate 
-        points:
+        points: list
             Set of points to calculate the basis
         current_index: int
             The index to find the current term to calculate

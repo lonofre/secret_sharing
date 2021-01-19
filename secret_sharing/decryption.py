@@ -27,7 +27,8 @@ def decrypt(file, points):
     
     key = int_key.to_bytes(32, byteorder='big')
     nonce = file[:AES.block_size]
-    body = file[AES.block_size:]
+    tag = file[AES.block_size: AES.block_size * 2]
+    body = file[AES.block_size * 2:]
     
     try:
         cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
