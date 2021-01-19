@@ -8,7 +8,7 @@ def encrypt(pswd, n, t, data):
     Returns
     --------
     bytes
-         the file encripted
+         the file encripted.
     
     * File with n pairs (x, P(x)). 
 
@@ -20,10 +20,9 @@ def encrypt(pswd, n, t, data):
     * data, String. Data to encrypt.
     
     '''
-    key = SHA256.new()
-    key.update(pswd.encode('utf8'))
+    key = SHA256.new(pswd.encode('utf8'))
     bytes_key = key.digest()
-    int_key = bytes_to_int(bytes_key)
+    int_key = int.from_bytes(bytes_key, "big")
     terms = get_terms(int_key, t)
     points = get_points(n, terms)
     cipher = AES.new(bytes_key, AES.MODE_EAX)
@@ -84,21 +83,3 @@ def get_points(n, terms):
         y = polynomial_value(terms, i+1)
         points.append((i+1, y))
     return points
-
-def bytes_to_int(bytes):
-    '''
-    Converts bytes to int
-    
-    Returns
-    -------
-    Integer
-           An integer representation of the received bytes.
-    
-    Parameters
-    ----------
-    bytes
-    '''
-    result = 0
-    for byte in bytes:
-        result = result * 256 + int(byte)
-    return result

@@ -3,6 +3,7 @@ from getpass import getpass
 import re
 import click
 import csv
+from decryption import decrypt
 
 @click.group()
 def sharing():
@@ -44,6 +45,4 @@ def encrypt_file(total_points, min_points, filename):
     file_out.close()
 
     with open(f_name[0]+".csv", "w") as csv_file:
-        csv_file.write('\n'.join('(%s, %s)\n' % point for point in points))
-            
-    
+        csv_file.write('\n'.join('%s, %s' % point for point in points))
