@@ -1,4 +1,7 @@
 import click
+import csv
+import re
+from .decryption import decrypt
 
 @click.group()
 def sharing():
@@ -20,8 +23,29 @@ def encrypt_file(points_output, total_points, min_points, filename):
 @click.argument('points_file', type=click.File('r'))
 @click.argument('filename', type=click.File('rb'))
 def decrypt_file(points_file, filename):
-    ''' Decrypt a file given a list of points'''
+    ''' Decrypt a file given a list of points
+    
+    POINTS_FILE is the list of points given to decrypt
 
-    encrypted_file = filename.read()
-    points = points_file.read(1024)
+    FILENAME is the file with extension .ss that will be
+    decrypted
+    '''
+    if re.search(r'\.sss$', filename.name):
+        encrypted_file = filename.read()
+        reader = csv.reader(points_file)
+        points = [tuple(map(int, row)) for row in reader]
+        try:
+            decrypted_file = decrypt(encrypted_file, points) 
+            new_name = re.sub(r'\.sss$', '', filename.name)
+            with open(new_name, 'wb') as f:
+                f.write(decrypted_file)
+        except ValueError as err:
+            print(err)
+            click.echo(f'Error: Cannot decrypt the file')
+        except ZeroDivisionError as err:
+            click.echo(f'Error: The  points need to be different')
+        except ArithmeticError as err:
+            click.echo(f'Error: Wroing points {points}, they are not integers ')
+    else:
+        click.echo(f'Error: Invalid file extension, it needs to end with .ss')
 

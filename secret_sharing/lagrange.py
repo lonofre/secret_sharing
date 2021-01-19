@@ -58,5 +58,7 @@ class Lagrange:
                 continue
             top *= evaluation - x
             bottom *= constant - x
+        if bottom == 0:
+            raise ZeroDivisionError('Cannot divide by zero')
         return top * pow(bottom, -1, self.prime) 
 
