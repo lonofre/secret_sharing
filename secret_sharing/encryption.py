@@ -30,19 +30,6 @@ def encrypt(pswd, n, t, data):
     cipher = AES.new(bytes_key, AES.MODE_EAX)
     ciphertext, tag = cipher.encrypt_and_digest(data)
 
-
-    nonce = cipher.nonce
-    lagrange = Lagrange(prime)
-    keyy = lagrange.interpolation(0, points)
-    key = keyy.to_bytes(32, byteorder="big")
-    cipherr = AES.new(key, AES.MODE_EAX, nonce=nonce)
-    plaintext = cipherr.decrypt(ciphertext)
-    try:
-        cipherr.verify(tag)
-        print("The message is authentic:", plaintext)
-    except ValueError:
-        print("Key incorrect or message corrupted")
-
     return  ciphertext, tag, cipher.nonce, points
 
 def get_terms(K, t):
