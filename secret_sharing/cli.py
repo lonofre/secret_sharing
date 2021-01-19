@@ -16,6 +16,10 @@ def sharing():
 def encrypt_file(total_points, min_points, filename):
     '''Encrypts a file. Saves it's encryption and a file with 
     n = total_points points.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 42cc0651f89574f0e6c3edfaa8e0a804c1263ea1
     TOTAL_POINTS is the number of points will be evaluated.
     
     MIN_POINTS is the degree of the polynomial.
