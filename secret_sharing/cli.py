@@ -3,7 +3,6 @@ from getpass import getpass
 import re
 import click
 import csv
-from decryption import decrypt
 
 @click.group()
 def sharing():
