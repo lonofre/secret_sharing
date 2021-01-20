@@ -58,7 +58,13 @@ def encrypt_file(total_points, min_points, filename):
     FILENAME is File to encrypt.
     
     '''
-    
+    if int(total_points) <= 2:
+        print("Total number of evaluations may be bigger than two")
+        return
+
+    if int(min_points) <= 1 or int(min_points) > int(total_points):
+        print("Minimum number of points necessary to decrypt may be greater than one or less/equal than/to the total number of evaluations")
+        return 
     data  = filename.read()
     pswd = getpass()
     ciphertext, tag, nonce, points = encrypt(pswd, int(total_points),
