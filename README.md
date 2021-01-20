@@ -31,9 +31,9 @@ To run the test, execute:
 
 ## Encryption
 To encrypt is necessary to run:
-'''bash
+```bash
 .../secretsharing$ python3 -m secret_sharing c N T [FILENAME]
-'''
+```
 Where:
 * N is the total points the program will store.
 * T it the minimum number of points required in order to decrypt the file.
@@ -41,9 +41,9 @@ Where:
 
 ## Decryption
 To decipher it is necessary to run:
-'''bash
+```bash
 .../secret_sharing$ python3 -m secret_sharing d [FILENAME] [POINTS_FILE]
-'''
+```
 
 Where:
 *FILENAME is the encrypted file with extension .ss .
