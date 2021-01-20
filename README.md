@@ -24,27 +24,28 @@ pip3 install pytest
 To run the test, execute:
 
 ```bash
-.../secret_sharing$ pytest ./tests
+pytest ./tests
 ```
 
 ## Usage
 
-## Encryption
+### Encryption
 To encrypt is necessary to run:
 ```bash
-.../secretsharing$ python3 -m secret_sharing c N T [FILENAME]
+python3 -m secret_sharing c N T [FILENAME]
 ```
 Where:
 * N is the total points the program will store.
 * T it the minimum number of points required in order to decrypt the file.
 * FILENAME is the file the program will encrypt.
 
-## Decryption
+### Decryption
 To decipher it is necessary to run:
 ```bash
-.../secret_sharing$ python3 -m secret_sharing d [FILENAME] [POINTS_FILE]
+python3 -m secret_sharing d [FILENAME] [POINTS_FILE]
 ```
 
 Where:
-*FILENAME is the encrypted file with extension .ss .
-*POUNST_FILE is a csv file with only the necessary points to decrypt.
+
+* FILENAME is the encrypted file with extension .ss .
+* POUNST_FILE is a csv file with only the necessary points to decrypt.
