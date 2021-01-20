@@ -48,4 +48,3 @@ To decipher it is necessary to run:
 Where:
 *FILENAME is the encrypted file with extension .ss .
 *POUNST_FILE is a csv file with only the necessary points to decrypt.
-
