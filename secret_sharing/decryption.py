@@ -25,13 +25,15 @@ def decrypt(file, points):
     except ArithmeticError as err:
         raise
     
-    key = int_key.to_bytes(32, byteorder='big')
+    # Because the prime has a size of 33 bytes
+    key = int_key.to_bytes(33, byteorder='big')
     nonce = file[:AES.block_size]
     tag = file[AES.block_size: AES.block_size * 2]
     body = file[AES.block_size * 2:]
     
     try:
-        cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
+        # And the key is always of 32 bytes
+        cipher = AES.new(key[1:], AES.MODE_EAX, nonce=nonce)
         decrypted_file = cipher.decrypt(body)
     except Exception as err:
         raise
