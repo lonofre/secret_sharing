@@ -35,7 +35,7 @@ def decrypt_file(filename, points_file):
         except ZeroDivisionError as err:
             click.echo(f'Error: The  points need to be different')
         except ArithmeticError as err:
-            click.echo(f'Error: Wroing points {points}, they are not integers ')
+            click.echo(f'Error: Wroing points , they are not integers ')
     else:
         click.echo(f'Error: Invalid file extension, it needs to end with .ss')
 
